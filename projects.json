@@ -1,0 +1,150 @@
+{
+  "owner": "RaghavBanuni",
+  "categories": [
+    "Risk and Finance",
+    "Customer and Growth",
+    "Healthcare",
+    "NLP and LLM Systems",
+    "Forecasting and Operations",
+    "Computer Vision",
+    "Data and Platform Engineering"
+  ],
+  "projects": [
+    {
+      "slug": "portfolio-optimization-quant",
+      "title": "Portfolio Optimization",
+      "category": "Risk and Finance",
+      "stack": ["NumPy", "pandas", "SciPy"],
+      "decision": "How much of each asset to hold, and how often to rebalance.",
+      "hard_part": "Mean-variance weights are notoriously unstable because sample covariance is badly conditioned. Ledoit-Wolf shrinkage and risk parity are included precisely to show the instability and what damps it, with walk-forward rebalancing so the result is out-of-sample."
+    },
+    {
+      "slug": "credit-risk-scorecard-ml",
+      "title": "Credit Risk Scorecard",
+      "category": "Risk and Finance",
+      "stack": ["scikit-learn", "gradient boosting", "pandas"],
+      "decision": "Approve, decline, or price a loan application.",
+      "hard_part": "A regulated decision has to be explainable, so the model is a WOE/IV scorecard with monotonic binning translated into integer points -- and the accuracy given up relative to raw boosting is measured rather than assumed."
+    },
+    {
+      "slug": "fraud-detection-imbalanced-ml",
+      "title": "Card Fraud Detection",
+      "category": "Risk and Finance",
+      "stack": ["scikit-learn", "pandas"],
+      "decision": "Block, review, or allow a transaction in real time.",
+      "hard_part": "At 0.2% positives, accuracy and ROC-AUC are both misleading, and velocity features leak the future unless they are computed strictly backwards. PR-AUC plus an explicit cost matrix decides the threshold."
+    },
+    {
+      "slug": "churn-prediction-ml-service",
+      "title": "Churn Prediction Service",
+      "category": "Customer and Growth",
+      "stack": ["scikit-learn", "FastAPI", "Docker", "GitHub Actions"],
+      "decision": "Which customers to spend retention budget on.",
+      "hard_part": "A ranked list is not a decision. Probabilities are calibrated and the threshold comes from expected value given the offer cost and the margin saved, then served behind an API with the same preprocessing as training."
+    },
+    {
+      "slug": "ab-testing-experimentation-engine",
+      "title": "A/B Testing Engine",
+      "category": "Customer and Growth",
+      "stack": ["NumPy", "SciPy", "pandas"],
+      "decision": "Ship the variant, or do not.",
+      "hard_part": "Fixed-horizon p-values are invalid the moment somebody peeks, which everybody does. Always-valid sequential tests, CUPED variance reduction, sample-ratio-mismatch gating and FDR control across metric families -- with a simulator that scores the analysis method itself for false positive rate."
+    },
+    {
+      "slug": "uplift-modeling-causal-marketing",
+      "title": "Uplift Modeling",
+      "category": "Customer and Growth",
+      "stack": ["scikit-learn", "NumPy"],
+      "decision": "Who to target, given that most responders would have converted anyway.",
+      "hard_part": "The individual treatment effect is never observed, so no row has a label. S/T/X/R-learners and the transformed outcome make it estimable, and Qini curves evaluate ranking without ground truth."
+    },
+    {
+      "slug": "recommender-implicit-feedback-coldstart",
+      "title": "Implicit-Feedback Recommender",
+      "category": "Customer and Growth",
+      "stack": ["NumPy", "SciPy sparse"],
+      "decision": "What to put in front of a user, including one you have never seen.",
+      "hard_part": "Implicit feedback has no negatives: a non-click is not a dislike. ALS with confidence weighting from scratch, content-based routing for cold start, and business re-ranking for diversity, availability and margin."
+    },
+    {
+      "slug": "hospital-readmission-risk-ml",
+      "title": "Hospital Readmission Risk",
+      "category": "Healthcare",
+      "stack": ["scikit-learn", "pandas"],
+      "decision": "Which discharged patients get a follow-up call, given a fixed number of nurses.",
+      "hard_part": "Capacity is the constraint, not the AUC, so evaluation is a decision curve under a daily call budget -- plus a subgroup audit for calibration and error-rate gaps, because an unequal error rate is a clinical harm."
+    },
+    {
+      "slug": "rag-qa-citation-verified",
+      "title": "Citation-Verified RAG",
+      "category": "NLP and LLM Systems",
+      "stack": ["Python", "BM25 and TF-IDF from scratch"],
+      "decision": "Answer the question, or say you cannot.",
+      "hard_part": "A fluent unsupported answer is worse than no answer. Every claim is verified against its cited span, abstention is calibrated, and retrieval is measured with recall@k, MRR and nDCG on a labelled set."
+    },
+    {
+      "slug": "ticket-routing-nlp-classifier",
+      "title": "Support Ticket Routing",
+      "category": "NLP and LLM Systems",
+      "stack": ["scikit-learn", "pandas"],
+      "decision": "Which queue a ticket goes to, and when a human decides instead.",
+      "hard_part": "Random validation flatters a model whose vocabulary drifts weekly, so validation is temporal. Word plus character n-grams survive typos, and a coverage curve shows what accuracy is bought by deferring the least confident share."
+    },
+    {
+      "slug": "llm-eval-guardrails-harness",
+      "title": "LLM Eval and Guardrails",
+      "category": "NLP and LLM Systems",
+      "stack": ["Python", "statistics"],
+      "decision": "Is this prompt or model change a regression?",
+      "hard_part": "An LLM judge is a measuring instrument, so it is validated against human labels before it is trusted. Paired McNemar tests gate releases, and guardrails fail closed on injection and PII."
+    },
+    {
+      "slug": "transformer-language-model-from-scratch",
+      "title": "Transformer From Scratch",
+      "category": "NLP and LLM Systems",
+      "stack": ["NumPy only"],
+      "decision": "None -- this one exists to prove the mechanism is understood, not borrowed.",
+      "hard_part": "Every backward pass is derived by hand and verified against finite differences: softmax Jacobian, LayerNorm's two correction terms, causal masking, and AdamW's decoupled decay. Byte-level BPE and KV-cache generation included."
+    },
+    {
+      "slug": "demand-forecasting-inventory-quantiles",
+      "title": "Demand Forecasting and Inventory",
+      "category": "Forecasting and Operations",
+      "stack": ["scikit-learn", "pandas", "NumPy"],
+      "decision": "How much to reorder, and when.",
+      "hard_part": "A point forecast cannot set a reorder point; the service level depends on the tail. Quantile forecasts feed reorder points whose achieved service level and holding cost are measured in simulation, with rolling-origin backtesting throughout."
+    },
+    {
+      "slug": "pytorch-vision-gradcam-distillation",
+      "title": "Vision, Grad-CAM and Distillation",
+      "category": "Computer Vision",
+      "stack": ["PyTorch"],
+      "decision": "Can this classifier be trusted, and can it run on a small device?",
+      "hard_part": "A planted background shortcut is inserted deliberately so that Grad-CAM pointing-game scores can catch a model that is right for the wrong reason. Calibration, robustness gaps and 10x distillation are all measured."
+    },
+    {
+      "slug": "sql-ecommerce-analytics-warehouse",
+      "title": "SQL Analytics Warehouse",
+      "category": "Data and Platform Engineering",
+      "stack": ["PostgreSQL"],
+      "decision": "What the business actually did last quarter.",
+      "hard_part": "Cohort retention, RFM, LTV and multi-touch attribution written as window-function SQL against a normalised schema, with reproducible SQL-only seed data and data-quality assertions that fail loudly."
+    },
+    {
+      "slug": "data-pipeline-orchestration-contracts",
+      "title": "Pipeline Orchestration and Data Contracts",
+      "category": "Data and Platform Engineering",
+      "stack": ["Python standard library", "SQLite"],
+      "decision": "Should this data be published at all?",
+      "hard_part": "Content-addressed fingerprints give incremental runs with early cutoff; contracts validate before publishing and never coerce; PSI bins come from the baseline; and lineage answers 'what else is wrong?' by traversal rather than memory."
+    },
+    {
+      "slug": "mlops-drift-monitoring-service",
+      "title": "Drift Monitoring Service",
+      "category": "Data and Platform Engineering",
+      "stack": ["Python", "SciPy", "FastAPI"],
+      "decision": "Is the model still fit for production, and is this alert worth waking someone for?",
+      "hard_part": "A monitor that cries wolf is turned off. PSI/KS/Wasserstein with FDR control and effect-size gating, delayed-label performance tracking, and a harness that scores the monitor itself on detection delay against false alarms."
+    }
+  ]
+}
