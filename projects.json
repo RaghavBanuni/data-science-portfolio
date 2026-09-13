@@ -5,9 +5,12 @@
     "Customer and Growth",
     "Healthcare",
     "NLP and LLM Systems",
+    "Ranking and Information Retrieval",
     "Forecasting and Operations",
+    "Optimization and Decision Systems",
     "Computer Vision",
-    "Data and Platform Engineering"
+    "Data and Platform Engineering",
+    "Privacy and Trustworthy ML"
   ],
   "projects": [
     {
@@ -33,6 +36,14 @@
       "stack": ["scikit-learn", "pandas"],
       "decision": "Block, review, or allow a transaction in real time.",
       "hard_part": "At 0.2% positives, accuracy and ROC-AUC are both misleading, and velocity features leak the future unless they are computed strictly backwards. PR-AUC plus an explicit cost matrix decides the threshold."
+    },
+    {
+      "slug": "graph-fraud-ring-detection-community",
+      "title": "Fraud Ring Detection on Graphs",
+      "category": "Risk and Finance",
+      "stack": ["Python standard library"],
+      "decision": "Which accounts to investigate together, rather than one at a time.",
+      "hard_part": "A ring is invisible per-account and obvious as a subgraph, so detection is community structure: IDF-weighted bipartite projection, Louvain modularity from scratch, and label propagation. Modularity's resolution limit is demonstrated rather than glossed over, because it silently hides small rings inside large communities."
     },
     {
       "slug": "churn-prediction-ml-service",
@@ -65,6 +76,22 @@
       "stack": ["NumPy", "SciPy sparse"],
       "decision": "What to put in front of a user, including one you have never seen.",
       "hard_part": "Implicit feedback has no negatives: a non-click is not a dislike. ALS with confidence weighting from scratch, content-based routing for cold start, and business re-ranking for diversity, availability and margin."
+    },
+    {
+      "slug": "bayesian-marketing-mix-modeling",
+      "title": "Bayesian Marketing Mix Modeling",
+      "category": "Customer and Growth",
+      "stack": ["Python standard library"],
+      "decision": "How to split next quarter's budget across channels.",
+      "hard_part": "Spend is correlated across channels and adstock and saturation are only weakly identified, so point estimates are misleading and the posterior is the deliverable. NUTS-free Metropolis sampling with R-hat and ESS diagnostics, plus an explicit statement that regression on observational spend is not a causal estimate without geo experiments to anchor it."
+    },
+    {
+      "slug": "survival-analysis-customer-churn",
+      "title": "Survival Analysis for Churn",
+      "category": "Customer and Growth",
+      "stack": ["Python standard library"],
+      "decision": "When a customer will leave, not merely whether.",
+      "hard_part": "Binary churn classification silently throws away censoring: a customer who has not yet churned is not a negative example. Kaplan-Meier with Greenwood intervals, Cox proportional hazards with Efron ties by Newton-Raphson, Schoenfeld residuals to test the proportionality assumption the model depends on, and IPCW Brier scores that stay honest under censoring."
     },
     {
       "slug": "hospital-readmission-risk-ml",
@@ -107,12 +134,44 @@
       "hard_part": "Every backward pass is derived by hand and verified against finite differences: softmax Jacobian, LayerNorm's two correction terms, causal masking, and AdamW's decoupled decay. Byte-level BPE and KV-cache generation included."
     },
     {
+      "slug": "search-reranking-learning-to-rank",
+      "title": "Search Reranking and Learning to Rank",
+      "category": "Ranking and Information Retrieval",
+      "stack": ["Python standard library"],
+      "decision": "What order to show results in, learned from logs nobody labelled.",
+      "hard_part": "Clicks measure attention as much as relevance, so a model trained on raw clicks reproduces the incumbent ranker including the mistakes that never got clicked. Pointwise, RankNet and LambdaRank on one model class isolate the loss, and inverse propensity weighting corrects position bias -- with the propensity estimator's own bias demonstrated rather than hidden."
+    },
+    {
       "slug": "demand-forecasting-inventory-quantiles",
       "title": "Demand Forecasting and Inventory",
       "category": "Forecasting and Operations",
       "stack": ["scikit-learn", "pandas", "NumPy"],
       "decision": "How much to reorder, and when.",
       "hard_part": "A point forecast cannot set a reorder point; the service level depends on the tail. Quantile forecasts feed reorder points whose achieved service level and holding cost are measured in simulation, with rolling-origin backtesting throughout."
+    },
+    {
+      "slug": "multivariate-time-series-anomaly-detection",
+      "title": "Multivariate Time-Series Anomaly Detection",
+      "category": "Forecasting and Operations",
+      "stack": ["Python standard library"],
+      "decision": "Is this deviation worth waking somebody for?",
+      "hard_part": "Per-signal thresholds miss the anomalies that matter, because a fleet failure is a change in the correlation structure while every individual series stays in range. Mahalanobis distance, PCA reconstruction error and a spectral residual, evaluated with range-based precision and recall plus detection delay -- because point-wise F1 rewards a detector that fires once inside a long event and misses the rest."
+    },
+    {
+      "slug": "vehicle-routing-capacitated-time-windows",
+      "title": "Vehicle Routing with Time Windows",
+      "category": "Optimization and Decision Systems",
+      "stack": ["Python standard library"],
+      "decision": "Which driver visits which stops, in what order.",
+      "hard_part": "CVRPTW is NP-hard and the constraints interact: a route that respects capacity can violate a time window and vice versa. Clarke-Wright savings for construction, then guided local search over 2-opt, Or-opt and cross-exchange -- with feasibility checked exactly rather than penalised, and the gap to a lower bound reported instead of claiming optimality."
+    },
+    {
+      "slug": "dynamic-pricing-contextual-bandits",
+      "title": "Dynamic Pricing with Contextual Bandits",
+      "category": "Optimization and Decision Systems",
+      "stack": ["Python standard library"],
+      "decision": "What price to quote this customer, now.",
+      "hard_part": "A pricing experiment costs money on every impression, so exploration has to be paid for deliberately. LinUCB and linear Thompson sampling with Sherman-Morrison rank-1 updates, cumulative regret against an oracle, and off-policy evaluation (IPS, SNIPS, doubly robust) so a new policy can be judged before it is deployed -- including where each estimator breaks."
     },
     {
       "slug": "pytorch-vision-gradcam-distillation",
@@ -139,12 +198,36 @@
       "hard_part": "Content-addressed fingerprints give incremental runs with early cutoff; contracts validate before publishing and never coerce; PSI bins come from the baseline; and lineage answers 'what else is wrong?' by traversal rather than memory."
     },
     {
+      "slug": "feature-store-point-in-time-joins",
+      "title": "Feature Store and Point-in-Time Joins",
+      "category": "Data and Platform Engineering",
+      "stack": ["Python standard library", "SQLite"],
+      "decision": "Is this training set actually reproducible in production?",
+      "hard_part": "Training-serving skew is a correctness bug that no metric reveals: a naive join attaches feature values that did not exist when the label was generated. As-of joins with explicit event-time versus processing-time semantics, late-arriving data, and a skew detector that compares offline and online reads on the same keys."
+    },
+    {
+      "slug": "streaming-event-processor-sliding-windows",
+      "title": "Streaming Event Processor",
+      "category": "Data and Platform Engineering",
+      "stack": ["Python standard library"],
+      "decision": "What the aggregate is right now, when events arrive out of order.",
+      "hard_part": "Event time and processing time diverge, so a window can never be closed with certainty -- only with a watermark that trades completeness for latency. Tumbling, sliding and session windows over pane decomposition, allowed lateness with explicit retractions, Space-Saving top-k under bounded memory, and checkpoints that make replay idempotent."
+    },
+    {
       "slug": "mlops-drift-monitoring-service",
       "title": "Drift Monitoring Service",
       "category": "Data and Platform Engineering",
       "stack": ["Python", "SciPy", "FastAPI"],
       "decision": "Is the model still fit for production, and is this alert worth waking someone for?",
       "hard_part": "A monitor that cries wolf is turned off. PSI/KS/Wasserstein with FDR control and effect-size gating, delayed-label performance tracking, and a harness that scores the monitor itself on detection delay against false alarms."
+    },
+    {
+      "slug": "differential-privacy-tabular-ml",
+      "title": "Differential Privacy for Tabular ML",
+      "category": "Privacy and Trustworthy ML",
+      "stack": ["Python standard library"],
+      "decision": "Can this model be released without leaking the people in it?",
+      "hard_part": "Epsilon is a bound on a mechanism, not a measurement of leakage, and the guarantee is void if sensitivity is mis-stated -- so clipping bias and small-cell error are shown alongside it. RDP accounting for the subsampled Gaussian, DP-SGD with per-example clipping, and a membership-inference audit whose empirical epsilon is reported next to the accounted one, in both directions: a successful attack proves a leak, a failed attack proves only that this attack failed."
     }
   ]
 }
